@@ -22,7 +22,7 @@ function Footer() {
     >
       <Container maxWidth="lg">
         <Grid container spacing={3}>
-          <Grid xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               About Us
             </Typography>
@@ -48,7 +48,7 @@ function Footer() {
               </IconButton>
             </Box>
           </Grid>
-          <Grid xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               Quick Links
             </Typography>
@@ -67,7 +67,7 @@ function Footer() {
               </ListItem>
             </List>
           </Grid>
-          <Grid xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               Categories
             </Typography>
@@ -86,7 +86,7 @@ function Footer() {
               </ListItem>
             </List>
           </Grid>
-          <Grid xs={12} sm={6} md={3}>
+          <Grid item xs={12} sm={6} md={3}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               Contact Us
             </Typography>

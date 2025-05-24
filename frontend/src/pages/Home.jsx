@@ -202,7 +202,7 @@ function Home() {
         </Typography>
         <Grid container spacing={2}>
           {breakingNews.map((article) => (
-            <Grid key={article.id} xs={12} md={6}>
+            <Grid item xs={12} md={6} key={article.id}>
               <Card>
                 <CardMedia
                   component="img"
@@ -233,7 +233,7 @@ function Home() {
       </Typography>
       <Grid container spacing={2}>
         {trendingNews.map((article) => (
-          <Grid key={article.id} xs={12} sm={6} md={4} lg={3}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={article.id}>
             <Card>
               <CardMedia
                 component="img"
@@ -248,35 +248,42 @@ function Home() {
                   color="primary"
                   sx={{ mb: 1 }}
                 />
-                <Typography gutterBottom variant="h6" component="div">
+                <Typography variant="h6" component="div" gutterBottom>
                   {article.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" gutterBottom>
                   {article.description}
                 </Typography>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    mt: 2,
-                    color: 'text.secondary',
-                  }}
-                >
-                  <AccessTimeIcon sx={{ mr: 1 }} fontSize="small" />
-                  <Typography variant="body2" sx={{ mr: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+                  <AccessTimeIcon sx={{ fontSize: 16, mr: 0.5 }} />
+                  <Typography variant="caption" color="text.secondary">
                     {article.readTime}
                   </Typography>
-                  <Typography variant="body2">{article.date}</Typography>
+                  <Typography variant="caption" color="text.secondary" sx={{ mx: 1 }}>
+                    •
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {article.date}
+                  </Typography>
                 </Box>
-                <Box sx={{ mt: 2 }}>
-                  <IconButton onClick={() => handleBookmark(article.id)}>
-                    {bookmarkedArticles.includes(article.id) ? (
-                      <BookmarkIcon />
-                    ) : (
-                      <BookmarkBorderIcon />
-                    )}
-                  </IconButton>
-                  <IconButton onClick={() => handleShare(article)}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+                  <Button
+                    size="small"
+                    startIcon={
+                      bookmarkedArticles.includes(article.id) ? (
+                        <BookmarkIcon />
+                      ) : (
+                        <BookmarkBorderIcon />
+                      )
+                    }
+                    onClick={() => handleBookmark(article.id)}
+                  >
+                    {bookmarkedArticles.includes(article.id) ? 'Saved' : 'Save'}
+                  </Button>
+                  <IconButton
+                    size="small"
+                    onClick={() => handleShare(article)}
+                  >
                     <ShareIcon />
                   </IconButton>
                 </Box>
@@ -286,42 +293,64 @@ function Home() {
         ))}
       </Grid>
 
-      {/* Editor's Pick and Newsletter Section */}
-      <Grid container spacing={4} sx={{ mt: 4 }}>
-        <Grid xs={12} md={8}>
-          <Typography variant="h5" gutterBottom>
-            Editor's Pick
-          </Typography>
-          <Grid container spacing={2}>
-            {editorsPick.map((article) => (
-              <Grid key={article.id} xs={12} sm={6}>
-                <Card>
-                  <CardMedia
-                    component="img"
-                    height="150"
-                    image={article.image}
-                    alt={article.title}
-                  />
-                  <CardContent>
-                    <Chip
-                      label={article.category}
-                      size="small"
-                      color="primary"
-                      sx={{ mb: 1 }}
-                    />
-                    <Typography variant="h6" component="div">
-                      {article.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {article.date}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
+      {/* Editor's Pick Section */}
+      <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
+        Editor's Pick
+      </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8}>
+          <Card>
+            <CardMedia
+              component="img"
+              height="400"
+              image={editorsPick[0].image}
+              alt={editorsPick[0].title}
+            />
+            <CardContent>
+              <Chip
+                label={editorsPick[0].category}
+                size="small"
+                color="primary"
+                sx={{ mb: 1 }}
+              />
+              <Typography variant="h5" component="div" gutterBottom>
+                {editorsPick[0].title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {editorsPick[0].date}
+              </Typography>
+            </CardContent>
+          </Card>
         </Grid>
-        <Grid xs={12} md={4}>
+        <Grid item xs={12} sm={6} key={editorsPick[1].id}>
+          <Card>
+            <CardMedia
+              component="img"
+              height="200"
+              image={editorsPick[1].image}
+              alt={editorsPick[1].title}
+            />
+            <CardContent>
+              <Chip
+                label={editorsPick[1].category}
+                size="small"
+                color="primary"
+                sx={{ mb: 1 }}
+              />
+              <Typography variant="h6" component="div" gutterBottom>
+                {editorsPick[1].title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {editorsPick[1].date}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+
+      {/* Newsletter Section */}
+      <Grid container spacing={2} sx={{ mt: 4 }}>
+        <Grid item xs={12} md={4}>
           <Newsletter />
         </Grid>
       </Grid>
