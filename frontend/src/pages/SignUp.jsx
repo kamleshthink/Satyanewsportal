@@ -33,7 +33,7 @@ const SignUp = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', {
+      const response = await axios.post('https://satyanewsportal-backend.onrender.com/api/auth/register', {
         name,
         email,
         mobile,
