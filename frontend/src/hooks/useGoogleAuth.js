@@ -12,12 +12,16 @@ export const useGoogleAuth = () => {
 
   const signInWithGoogle = async () => {
     try {
+      console.log('Initializing Google Auth Provider...');
       const provider = new GoogleAuthProvider();
+      console.log('Opening Google Sign In popup...');
       const result = await signInWithPopup(auth, provider);
+      console.log('Google Sign In popup result:', result);
       setUser(result.user);
       setError(null);
       return result.user;
     } catch (error) {
+      console.error('Error in signInWithGoogle:', error);
       setError(error.message);
       throw error;
     }

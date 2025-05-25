@@ -12,6 +12,7 @@ import {
   Divider,
 } from '@mui/material'
 import axios from 'axios'
+import { useGoogleAuth } from '../hooks/useGoogleAuth'
 
 function SignIn() {
   const [emailOrPhone, setEmailOrPhone] = useState('')
@@ -19,6 +20,7 @@ function SignIn() {
   const [error, setError] = useState('')
   const navigate = useNavigate()
   const { login } = useAuth()
+  const { signInWithGoogle, error: googleError } = useGoogleAuth()
 
   const handleSignIn = async (e) => {
     e.preventDefault()
@@ -32,6 +34,29 @@ function SignIn() {
       navigate('/')
     } catch (err) {
       setError(err.response?.data?.message || 'Error in login')
+    }
+  }
+
+  const handleGoogleSignIn = async () => {
+    try {
+      console.log('Starting Google Sign In...');
+      const user = await signInWithGoogle();
+      console.log('Google Sign In successful:', user);
+      
+      console.log('Sending data to backend...');
+      const response = await axios.post('https://satyanewsportal-backend.onrender.com/api/auth/google-login', {
+        email: user.email,
+        name: user.displayName,
+        googleId: user.uid,
+        profilePicture: user.photoURL
+      });
+      console.log('Backend response:', response.data);
+      
+      login(response.data.token, response.data.user);
+      navigate('/');
+    } catch (error) {
+      console.error('Google Sign In failed:', error);
+      setError(error.response?.data?.message || 'Google Sign In failed');
     }
   }
 
@@ -103,10 +128,11 @@ function SignIn() {
             fullWidth
             variant="outlined"
             sx={{ mb: 1 }}
-            onClick={() => {/* Handle Google Sign In */}}
+            onClick={handleGoogleSignIn}
           >
             Sign In with Google
           </Button>
+          {googleError && <Typography color="error" sx={{ mt: 1 }}>{googleError}</Typography>}
           <Button
             fullWidth
             variant="outlined"
